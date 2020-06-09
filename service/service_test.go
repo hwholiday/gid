@@ -1,4 +1,4 @@
-package repository
+package service
 
 import (
 	"flag"
@@ -8,10 +8,6 @@ import (
 	"testing"
 )
 
-var (
-	r *Repository
-)
-
 func TestMain(m *testing.M) {
 	_ = flag.Set("conf", "./../cmd/gid.toml")
 	flag.Parse()
@@ -19,6 +15,6 @@ func TestMain(m *testing.M) {
 		panic(err)
 	}
 	log.NewLogger(configs.Conf.Log)
-	r = NewRepository(&configs.Conf)
+	NewService(&configs.Conf)
 	os.Exit(m.Run())
 }

@@ -19,8 +19,6 @@ func NewRepository(c *configs.Config) (r *Repository) {
 	return r
 }
 
-func (r *Repository)Close()  {
+func (r *Repository) Close() {
 	_ = r.db.Close()
 }
-
-

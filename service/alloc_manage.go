@@ -2,7 +2,10 @@ package service
 
 import (
 	"context"
+	"errors"
 	"gid/entity"
+	"gid/library/log"
+	"go.uber.org/zap"
 	"sync"
 	"time"
 )
@@ -14,7 +17,6 @@ type Alloc struct {
 
 type BizAlloc struct {
 	Mu      sync.Mutex
-	Wg      sync.WaitGroup
 	BazTag  string
 	IdArray []*IdArray
 	GetDb   bool //当前正在查询DB
@@ -35,6 +37,7 @@ func (s *Service) NewAllocId() (a *Alloc, err error) {
 		BizTagMap: make(map[string]*BizAlloc),
 	}
 	for _, v := range res {
+		log.GetLogger().Debug("[NewAllocId]", zap.Any("tag", v.BizTag))
 		a.BizTagMap[v.BizTag] = &BizAlloc{
 			BazTag:  v.BizTag,
 			GetDb:   false,
@@ -49,36 +52,77 @@ func (b *BizAlloc) GetId() (id int64, err error) {
 		canGetId    bool
 		ctx, cancel = context.WithTimeout(context.Background(), time.Second*3)
 	)
-	defer cancel()
 	b.Mu.Lock()
 	if b.LeftIdCount() > 0 {
 		id = b.PopId()
 		canGetId = true
 	}
-	// 2, 段<=1个, 启动补偿线程
+	//分配ID数组不足开始携程去申请新的ID
 	if len(b.IdArray) <= 1 && !b.GetDb {
 		b.GetDb = true
-		b.Wg.Add(1)
-		//go bizAlloc.fillSegments()
+		b.Mu.Unlock()
+		go b.GetIdArray(cancel)
+	} else {
+		b.Mu.Unlock()
+		defer cancel()
 	}
-	b.Mu.Unlock()
 	if canGetId {
 		return
 	}
 	select {
-	case <-ctx.Done(): //执行超时
-		b.Wg.Done()
+	case <-ctx.Done(): //执行结束或者超时
 	}
-	b.Wg.Wait()
+	b.Mu.Lock()
+	if b.LeftIdCount() > 0 {
+		id = b.PopId()
+	} else {
+		err = errors.New("no get id")
+	}
+	b.Mu.Unlock()
+	log.GetLogger().Debug("获取到的ID", zap.Any("id", id))
+	return
+}
 
-	//检查是否需要补充数据
-
+func (b *BizAlloc) GetIdArray(cancel context.CancelFunc) {
+	var (
+		tryNum int
+		ids    *entity.Segments
+		err    error
+	)
+	defer cancel()
+	for {
+		if tryNum >= 3 { //失败重试 3 次
+			b.GetDb = false
+			break
+		}
+		b.Mu.Lock()
+		if len(b.IdArray) <= 1 {
+			b.Mu.Unlock()
+			ids, err = GetService().r.SegmentsIdNext(b.BazTag)
+			if err != nil {
+				tryNum++
+			} else {
+				tryNum = 0
+				b.Mu.Lock()
+				b.IdArray = append(b.IdArray, &IdArray{Start: ids.MaxId, End: ids.MaxId + ids.Step})
+				if len(b.IdArray) > 1 {
+					b.GetDb = false
+					b.Mu.Unlock()
+					break
+				} else {
+					b.Mu.Unlock()
+				}
+			}
+		} else {
+			b.Mu.Unlock()
+		}
+	}
 }
 
 func (b *BizAlloc) LeftIdCount() (count int64) {
 	for _, v := range b.IdArray {
 		arr := v
-		//结束位置-开始位置-已经分配的位置
+		//结束位置-开始位置-已经分配的次数
 		count += arr.End - arr.Start - arr.Cur
 	}
 	return count

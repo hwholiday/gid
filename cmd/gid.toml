@@ -1,6 +1,7 @@
 development = true
 [mysql]
-    addr = "192.168.106.128:3306"
+    #addr = "192.168.106.128:3306"
+    addr = "192.168.153.128:3306"
     user = "root"
     password = "123456"
     dbName = "study"
