@@ -1,0 +1,19 @@
+development = true
+[mysql]
+    addr = "192.168.106.128:3306"
+    user = "root"
+    password = "123456"
+    dbName = "study"
+    parameters = "charset=utf8&parseTime=True&loc=Local"
+    maxConn = 20
+    idleConn = 10
+    idleTimeout = 14400000
+    queryTimeout = 800
+    execTimeout = 800
+[log]
+    logFileDir = "logs"
+    appName = "Gid"
+    maxSize = 100
+    maxBackups = 60
+    maxAge = 30
+    level  = "debug"
