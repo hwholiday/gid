@@ -9,5 +9,5 @@ func (s *Service) GetId(tag string) (id int64, err error) {
 	if !ok {
 		return 0, errors.New("not find tag")
 	}
-	return val.GetId()
+	return val.GetId(s)
 }

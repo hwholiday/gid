@@ -7,7 +7,7 @@ import (
 
 func TestService_GetId(t *testing.T) {
 	convey.Convey("TestService_GetId", t, func(c convey.C) {
-		res, err := GetService().GetId("test")
+		res, err := s.GetId("test")
 		convey.So(err, convey.ShouldBeNil)
 		t.Logf("res %v", res)
 	})
@@ -15,7 +15,7 @@ func TestService_GetId(t *testing.T) {
 
 func BenchmarkService_GetId(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		_, err := GetService().GetId("test")
+		_, err := s.GetId("test")
 		if err != nil {
 			b.Error(err)
 		}

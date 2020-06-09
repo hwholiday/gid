@@ -1,14 +1,11 @@
 package service
 
 import (
-	"fmt"
 	"gid/configs"
 	"gid/library/log"
 	"gid/repository"
 	"go.uber.org/zap"
 )
-
-var s *Service
 
 type Service struct {
 	c     *configs.Config
@@ -16,7 +13,7 @@ type Service struct {
 	alloc *Alloc
 }
 
-func NewService(c *configs.Config) {
+func NewService(c *configs.Config) (s *Service) {
 	var err error
 	s = &Service{
 		c: c,
@@ -26,10 +23,6 @@ func NewService(c *configs.Config) {
 		log.GetLogger().Error("[NewService] NewAllocId ", zap.Error(err))
 		panic(err)
 	}
-	fmt.Println(s)
-}
-
-func GetService() *Service {
 	return s
 }
 

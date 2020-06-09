@@ -8,6 +8,8 @@ import (
 	"testing"
 )
 
+var s *Service
+
 func TestMain(m *testing.M) {
 	_ = flag.Set("conf", "./../cmd/gid.toml")
 	flag.Parse()
@@ -15,6 +17,6 @@ func TestMain(m *testing.M) {
 		panic(err)
 	}
 	log.NewLogger(configs.Conf.Log)
-	NewService(&configs.Conf)
+	s = NewService(&configs.Conf)
 	os.Exit(m.Run())
 }

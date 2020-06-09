@@ -4,8 +4,6 @@ import (
 	"context"
 	"errors"
 	"gid/entity"
-	"gid/library/log"
-	"go.uber.org/zap"
 	"sync"
 	"time"
 )
@@ -37,7 +35,6 @@ func (s *Service) NewAllocId() (a *Alloc, err error) {
 		BizTagMap: make(map[string]*BizAlloc),
 	}
 	for _, v := range res {
-		log.GetLogger().Debug("[NewAllocId]", zap.Any("tag", v.BizTag))
 		a.BizTagMap[v.BizTag] = &BizAlloc{
 			BazTag:  v.BizTag,
 			GetDb:   false,
@@ -47,7 +44,7 @@ func (s *Service) NewAllocId() (a *Alloc, err error) {
 	return
 }
 
-func (b *BizAlloc) GetId() (id int64, err error) {
+func (b *BizAlloc) GetId(s *Service) (id int64, err error) {
 	var (
 		canGetId    bool
 		ctx, cancel = context.WithTimeout(context.Background(), time.Second*3)
@@ -61,7 +58,7 @@ func (b *BizAlloc) GetId() (id int64, err error) {
 	if len(b.IdArray) <= 1 && !b.GetDb {
 		b.GetDb = true
 		b.Mu.Unlock()
-		go b.GetIdArray(cancel)
+		go b.GetIdArray(cancel, s)
 	} else {
 		b.Mu.Unlock()
 		defer cancel()
@@ -79,11 +76,10 @@ func (b *BizAlloc) GetId() (id int64, err error) {
 		err = errors.New("no get id")
 	}
 	b.Mu.Unlock()
-	log.GetLogger().Debug("获取到的ID", zap.Any("id", id))
 	return
 }
 
-func (b *BizAlloc) GetIdArray(cancel context.CancelFunc) {
+func (b *BizAlloc) GetIdArray(cancel context.CancelFunc, s *Service) {
 	var (
 		tryNum int
 		ids    *entity.Segments
@@ -98,7 +94,7 @@ func (b *BizAlloc) GetIdArray(cancel context.CancelFunc) {
 		b.Mu.Lock()
 		if len(b.IdArray) <= 1 {
 			b.Mu.Unlock()
-			ids, err = GetService().r.SegmentsIdNext(b.BazTag)
+			ids, err = s.r.SegmentsIdNext(b.BazTag)
 			if err != nil {
 				tryNum++
 			} else {
