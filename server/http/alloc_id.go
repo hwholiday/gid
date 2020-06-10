@@ -1,8 +1,10 @@
 package http
 
 import (
+	"encoding/json"
 	"gid/entity"
 	"github.com/gin-gonic/gin"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -34,11 +36,16 @@ func GetId(g *gin.Context) {
 }
 
 func CreateTag(g *gin.Context) {
-	var (
-		err error
-	)
 	var data entity.Segments
-	if err = g.BindJSON(&data); err != nil {
+	info, err := ioutil.ReadAll(g.Request.Body)
+	if err != nil {
+		g.JSON(http.StatusOK, gin.H{
+			"code": http.StatusInternalServerError,
+			"msg":  err.Error(),
+		})
+		return
+	}
+	if err = json.Unmarshal(info, &data); err != nil {
 		g.JSON(http.StatusOK, gin.H{
 			"code": http.StatusInternalServerError,
 			"msg":  err.Error(),

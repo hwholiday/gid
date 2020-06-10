@@ -1,4 +1,6 @@
-create table study.segments
+create database gid;
+use gid;
+create table segments
 (
     biz_tag     varchar(128) not null,
     max_id      bigint       null,
@@ -12,5 +14,5 @@ create table study.segments
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_bin;
 
-INSERT INTO study.segments(`biz_tag`, `max_id`, `step`, `remark`, `create_time`, `update_time`)
+INSERT INTO segments(`biz_tag`, `max_id`, `step`, `remark`, `create_time`, `update_time`)
 VALUES ('test', 0, 100000, 'test', 1591706686, 1591706686);
