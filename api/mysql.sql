@@ -13,4 +13,4 @@ create table study.segments
   COLLATE = utf8mb4_bin;
 
 INSERT INTO study.segments(`biz_tag`, `max_id`, `step`, `remark`, `create_time`, `update_time`)
-VALUES ('test', 1, 100000, 'test', 1591706686, 1591706686);
+VALUES ('test', 0, 100000, 'test', 1591706686, 1591706686);

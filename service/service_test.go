@@ -17,6 +17,6 @@ func TestMain(m *testing.M) {
 		panic(err)
 	}
 	log.NewLogger(configs.Conf.Log)
-	s = NewService(&configs.Conf)
+	s = NewService(configs.Conf)
 	os.Exit(m.Run())
 }

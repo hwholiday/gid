@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"gid/library/log"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/jinzhu/gorm"
+	"github.com/go-xorm/xorm"
 	"go.uber.org/zap"
 	"time"
 )
@@ -25,17 +25,18 @@ type Config struct {
 }
 
 //user:password@(addr)/dbname?charset=utf8&parseTime=True&loc=Local
-func NewMysql(c *Config) (db *gorm.DB) {
+func NewMysql(c *Config) (db *xorm.Engine) {
 	var err error
-	db, err = gorm.Open("mysql", fmt.Sprintf("%s:%s@(%s)/%s?%s", c.User, c.Password, c.Addr, c.DbName, c.Parameters))
+	db, err = xorm.NewEngine("mysql", fmt.Sprintf("%s:%s@(%s)/%s?%s", c.User, c.Password, c.Addr, c.DbName, c.Parameters))
 	if err != nil {
 		log.GetLogger().Error("[NewMysql] Open", zap.Any("conf", c), zap.Error(err))
 		panic(err)
 	}
-	db.DB().SetMaxIdleConns(c.IdleConn)
-	db.DB().SetMaxOpenConns(c.MaxConn)
-	db.DB().SetConnMaxLifetime(time.Duration(c.IdleTimeout) * time.Millisecond)
-	db.LogMode(c.Debug)
+	db.SetMaxIdleConns(c.IdleConn)
+	db.SetMaxOpenConns(c.MaxConn)
+	db.SetConnMaxLifetime(time.Duration(c.IdleTimeout) * time.Millisecond)
+	db.ShowSQL(c.Debug)
+	db.ShowExecTime(c.Debug)
 	if err = db.DB().Ping(); err != nil {
 		log.GetLogger().Error("[NewMysql] Ping", zap.Any("conf", c), zap.Error(err))
 		panic(err)

@@ -3,12 +3,12 @@ package repository
 import (
 	"gid/configs"
 	"gid/library/database/mysql"
-	"github.com/jinzhu/gorm"
+	"github.com/go-xorm/xorm"
 )
 
 type Repository struct {
 	c  *configs.Config
-	db *gorm.DB
+	db *xorm.Engine
 }
 
 func NewRepository(c *configs.Config) (r *Repository) {

@@ -4,6 +4,9 @@ import (
 	"flag"
 	"gid/configs"
 	"gid/library/log"
+	"gid/library/tool"
+	"gid/server/http"
+	"gid/service"
 )
 
 func main() {
@@ -12,4 +15,10 @@ func main() {
 		panic(err)
 	}
 	log.NewLogger(configs.Conf.Log)
+	s := service.NewService(configs.Conf)
+	http.Init(configs.Conf, s)
+	tool.QuitSignal(func() {
+		s.Close()
+		log.GetLogger().Info("gid exit success")
+	})
 }

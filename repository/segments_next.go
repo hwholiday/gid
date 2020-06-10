@@ -9,19 +9,20 @@ import (
 
 func (r *Repository) SegmentsIdNext(tag string) (id *entity.Segments, err error) {
 	var (
-		tx = r.db.Begin()
+		tx = r.db.Prepare()
 	)
 	id = &entity.Segments{}
-	if err = tx.Exec("update segments set max_id=max_id+step,update_time = ? where biz_tag = ?", tool.GetTimeUnix(), tag).Error; err != nil {
+	if _, err = tx.Exec("update segments set max_id=max_id+step,update_time = ? where biz_tag = ?", tool.GetTimeUnix(), tag); err != nil {
 		log.GetLogger().Error("[Repository] SegmentsIdNext Update", zap.String("tag", tag), zap.Error(err))
-		tx.Rollback()
+		_ = tx.Rollback()
 		return
 	}
-	if err = tx.Where("biz_tag = ?", tag).First(&id).Error; err != nil {
-		log.GetLogger().Error("[Repository] SegmentsIdNext First", zap.String("tag", tag), zap.Error(err))
-		tx.Rollback()
+	if _, err = tx.Where("biz_tag = ?", tag).Get(id); err != nil {
+		log.GetLogger().Error("[Repository] SegmentsIdNext Get", zap.String("tag", tag), zap.Error(err))
+		_ = tx.Rollback()
 		return
 	}
-	err = tx.Commit().Error
+	err = tx.Commit()
+	log.GetLogger().Debug("[Repository] ", zap.String("tag", tag), zap.Any("data", id))
 	return
 }

@@ -9,13 +9,18 @@ import (
 
 var (
 	confPath string
-	Conf     Config
+	Conf     = new(Config)
 )
 
 type Config struct {
 	Development bool
 	Log         *log.Options
 	Mysql       *mysql.Config
+	Http        *httpConf
+}
+
+type httpConf struct {
+	Port int
 }
 
 func init() {

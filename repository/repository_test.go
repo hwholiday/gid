@@ -19,6 +19,6 @@ func TestMain(m *testing.M) {
 		panic(err)
 	}
 	log.NewLogger(configs.Conf.Log)
-	r = NewRepository(&configs.Conf)
+	r = NewRepository(configs.Conf)
 	os.Exit(m.Run())
 }
