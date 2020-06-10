@@ -1,4 +1,4 @@
-development = true
+development = false
 [mysql]
     addr = "192.168.106.128:3306"
     #addr = "192.168.153.128:3306"

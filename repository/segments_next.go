@@ -23,6 +23,5 @@ func (r *Repository) SegmentsIdNext(tag string) (id *entity.Segments, err error)
 		return
 	}
 	err = tx.Commit()
-	log.GetLogger().Debug("[Repository] ", zap.String("tag", tag), zap.Any("data", id))
 	return
 }

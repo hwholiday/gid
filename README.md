@@ -40,7 +40,10 @@ VALUES ('test', 0, 100000, 'test', 1591706686, 1591706686);
     go build -o gidsrv
    ./gidsrv -conf ./gid.toml
 ```
- 
+#### 压测
+```base
+BenchmarkService_GetId-4         2046296               583 ns/op 
+```
 #### 健康检查
 - curl http://127.0.0.1:8080/ping
 
