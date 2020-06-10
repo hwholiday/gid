@@ -58,7 +58,13 @@ BenchmarkService_GetId-4         2046296               583 ns/op
 - remark 备注
 - {"biz_tag":"test6","max_id":0,"step":10,"remark":"test6 tag"}
 - curl -H "Content-Type:application/json" -X POST --data '{"biz_tag":"test6","max_id":0,"step":10,"remark":"test6 tag"}' http://127.0.0.1:8080/tag
-
+#### 重点SQL
+```base
+Begin
+UPDATE table SET max_id=max_id+step WHERE biz_tag=xxx
+SELECT tag, max_id, step FROM table WHERE biz_tag=xxx
+Commit
+```
 ### 文献
 [美团点评分布式ID生成系统](https://tech.meituan.com/2017/04/21/mt-leaf.html)
 
