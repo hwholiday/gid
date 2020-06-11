@@ -17,9 +17,13 @@ type Config struct {
 	Log         *log.Options
 	Mysql       *mysql.Config
 	Http        *httpConf
+	Grpc        *grpcConf
 }
 
 type httpConf struct {
+	Port int
+}
+type grpcConf struct {
 	Port int
 }
 

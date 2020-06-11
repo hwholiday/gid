@@ -20,3 +20,5 @@ development = false
     level  = "debug"
 [http]
     port = 8080
+[grpc]
+    port = 8081

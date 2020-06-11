@@ -1,0 +1,7 @@
+syntax = "proto3";
+package gid;
+
+message Status {
+  int32  code = 1; //自定义错误码
+  string msg = 2; //错误信息(只有code不等于200的时候返回)
+}

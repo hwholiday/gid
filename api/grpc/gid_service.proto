@@ -1,0 +1,11 @@
+syntax = "proto3";
+package gid;
+import "id.proto";
+
+
+
+service Gid{
+  rpc Ping(ReqPing)returns (ResPong);
+  rpc GetId(ReqId)returns (ResId);
+  rpc CreateTag(ReqTagCreate)returns (ResTagCreate);
+}

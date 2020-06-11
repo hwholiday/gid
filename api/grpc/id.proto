@@ -1,0 +1,33 @@
+syntax = "proto3";
+package gid;
+
+import "base.proto";
+
+message ReqId {
+  string  tag = 1;
+}
+
+message ResId{
+  Status status = 1;
+  int64  id = 2;
+}
+
+message ReqPing{
+
+}
+
+message ResPong{
+  Status status = 1;
+  string data = 2;
+}
+
+message ReqTagCreate {
+  string tag = 1;
+  int64 maxId = 2;
+  int64 step = 3;
+  string remark = 4;
+}
+
+message ResTagCreate {
+  Status status = 1;
+}
