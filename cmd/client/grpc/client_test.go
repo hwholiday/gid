@@ -62,6 +62,17 @@ func TestGetId(t *testing.T) {
 	})
 }
 
+func TestGetRandId(t *testing.T) {
+	convey.Convey("TestGetRandId", t, func(c convey.C) {
+		res, err := client.GetRandId(context.Background(), &gid.ReqRandId{
+			Tag: "test01",
+		})
+		c.So(err, convey.ShouldBeNil)
+		c.So(res, convey.ShouldNotBeNil)
+		t.Log(res)
+	})
+}
+
 //go test -bench=. -run=none
 func BenchmarkGetId(b *testing.B) {
 	b.ResetTimer()

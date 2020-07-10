@@ -31,3 +31,12 @@ message ReqTagCreate {
 message ResTagCreate {
   Status status = 1;
 }
+
+message ReqRandId {
+  string  tag = 1;
+}
+
+message ResRandId{
+  Status status = 1;
+  int64  id = 2;
+}

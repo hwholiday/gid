@@ -35,6 +35,13 @@ func GetId(g *gin.Context) {
 	})
 }
 
+func GetRandId(g *gin.Context) {
+	g.JSON(http.StatusOK, gin.H{
+		"code": http.StatusOK,
+		"data": srv.SnowFlakeGetId(),
+	})
+}
+
 func CreateTag(g *gin.Context) {
 	var data entity.Segments
 	info, err := ioutil.ReadAll(g.Request.Body)

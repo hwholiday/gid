@@ -8,4 +8,5 @@ service Gid{
   rpc Ping(ReqPing)returns (ResPong);
   rpc GetId(ReqId)returns (ResId);
   rpc CreateTag(ReqTagCreate)returns (ResTagCreate);
+  rpc GetRandId(ReqRandId)returns (ResRandId);
 }

@@ -14,6 +14,7 @@ var (
 
 type Config struct {
 	Development bool
+	SnowFlakeId int64
 	Log         *log.Options
 	Mysql       *mysql.Config
 	Http        *httpConf

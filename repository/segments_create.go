@@ -4,6 +4,7 @@ import (
 	"errors"
 	"gid/entity"
 	"gid/library/log"
+	"gid/library/tool"
 	"go.uber.org/zap"
 )
 
@@ -17,6 +18,7 @@ func (r *Repository) SegmentsCreate(s *entity.Segments) (err error) {
 		err = errors.New("tag already exists")
 		return
 	}
+	s.CreateTime = tool.GetTimeUnix()
 	if _, err = r.db.Insert(s); err != nil {
 		log.GetLogger().Error("[SegmentsCreate] Create", zap.Any("req", s), zap.Error(err))
 		return

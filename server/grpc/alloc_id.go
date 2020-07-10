@@ -16,6 +16,17 @@ func (s *Server) Ping(ctx context.Context, in *gid.ReqPing) (out *gid.ResPong, e
 	}
 	return
 }
+
+func (s *Server) GetRandId(ctx context.Context, in *gid.ReqRandId) (out *gid.ResRandId, err error) {
+	out = &gid.ResRandId{
+		Status: &gid.Status{
+			Code: http.StatusOK,
+		},
+		Id: s.srv.SnowFlakeGetId(),
+	}
+	return
+}
+
 func (s *Server) GetId(ctx context.Context, in *gid.ReqId) (out *gid.ResId, err error) {
 	var id int64
 	out = &gid.ResId{

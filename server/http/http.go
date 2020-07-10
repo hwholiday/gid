@@ -49,5 +49,6 @@ func setRouters(r *gin.Engine) {
 	})
 	r.POST("/tag", CreateTag)
 	r.GET("/id/:tag", GetId)
+	r.GET("/rand/id", GetRandId)
 
 }
