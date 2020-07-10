@@ -1,5 +1,6 @@
 # 简介
 gid 是使用golang开发的生成分布式Id系统，基于数据库号段算法实现
+######  HTTP,GRPC 对外服务
 ### 性能
 - id 从内存生成，如果(step)步长设置的足够大,qps可达到千万+
 ### 可用性
@@ -50,6 +51,9 @@ BenchmarkService_GetId-4         2046296               583 ns/op
 #### 获取ID
  - test6 获取该 tag 类型的 id
  - curl http://127.0.0.1:8080/id/test6
+
+#### 获取雪花算法生成的ID
+ - curl http://127.0.0.1:8080/rand/id 
  
 #### 创建 tag
 - biz_tag tag 名称
@@ -65,6 +69,8 @@ UPDATE table SET max_id=max_id+step WHERE biz_tag=xxx
 SELECT tag, max_id, step FROM table WHERE biz_tag=xxx
 Commit
 ```
+
+
 ### 文献
 [美团点评分布式ID生成系统](https://tech.meituan.com/2017/04/21/mt-leaf.html)
 
