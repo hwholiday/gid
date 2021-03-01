@@ -30,6 +30,14 @@ gid 是使用golang开发的生成分布式Id系统，基于数据库号段算�
 1. 封住了 client 实现了自动识别服务主节点
 2. 只需要实现 client 并调用 GetId(GRPC方法)，无需其他接口，自动创建BizTag，并预加载
 
+```base
+    cli, err := InitGrpc([]string{"127.0.0.1:2379"}, 15)
+	c, _ := cli.GetGidGrpcClient()
+	res, err := c.GetId(context.TODO(), &gidSrv.ReqId{
+		BizTag: "111",
+	})
+	fmt.Println(res,err)
+```
 ### 安装
 
 - 初始化 mysql
