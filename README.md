@@ -1,4 +1,6 @@
 # 简介
+# [推荐使用V2版本](https://github.com/hwholiday/gid/tree/gidV2)
+
 gid 是使用golang开发的生成分布式Id系统，基于数据库号段算法实现
 ######  HTTP,GRPC 对外服务
 ### 性能
