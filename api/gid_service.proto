@@ -1,0 +1,15 @@
+syntax = "proto3";
+package gidSrv;
+option go_package = ".;gidSrv";
+
+service Gid{
+  rpc GetId(ReqId)returns (ResId);
+}
+
+message ReqId {
+  string  BizTag = 1;
+}
+
+message ResId{
+  int64  id = 2;
+}
