@@ -27,6 +27,13 @@ gid 是使用golang开发的生成分布式Id系统，基于数据库号段算�
 1. server 基于 ETCD Lease 实现了自动抢主，主节点挂了，从节点自动申请为主节点
 
 ### 简化调用逻辑
+
+```base
+  go get github.com/hwholiday/gid/v2@gidV2
+  
+  //go mod 内
+  //github.com/hwholiday/gid/v2 v2.0.2
+```
 1. 封住了 client 实现了自动识别服务主节点
 2. 只需要实现 client 并调用 GetId(GRPC方法)，无需其他接口，自动创建BizTag，并预加载
 
