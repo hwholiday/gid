@@ -2,9 +2,9 @@ package tool
 
 import (
 	"context"
+	"github.com/coreos/etcd/clientv3"
+	"github.com/coreos/etcd/mvcc/mvccpb"
 	"github.com/hwholiday/gid/v2/library/log"
-	"go.etcd.io/etcd/api/v3/mvccpb"
-	"go.etcd.io/etcd/client/v3"
 	"go.uber.org/zap"
 	"time"
 )
