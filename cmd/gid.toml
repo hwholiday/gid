@@ -1,8 +1,8 @@
 development = false
 snowFlakeId = 1
-etcd = ["172.12.17.161:2379"]
+etcd = ["127.0.0.1:2379"]
 [mysql]
-    addr = "172.12.17.160:3306"
+    addr = "127.0.0.1:3306"
     user = "root"
     password = "123456"
     dbName = "im"
