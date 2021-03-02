@@ -1,4 +1,4 @@
-module gid
+module github.com/hwholiday/gid
 
 go 1.14
 
