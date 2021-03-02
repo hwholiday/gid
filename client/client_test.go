@@ -5,7 +5,6 @@ import (
 	"fmt"
 	gidSrv "github.com/hwholiday/gid/v2/api"
 	"testing"
-	"time"
 )
 
 func TestInitGrpc(t *testing.T) {
@@ -15,17 +14,4 @@ func TestInitGrpc(t *testing.T) {
 		BizTag: "111",
 	})
 	fmt.Println(res, err)
-	if err != nil {
-		panic(err)
-	}
-	for i := 0; i < 100; i++ {
-		time.Sleep(time.Second)
-		c, _ := cli.GetGidGrpcClient()
-		_, err := c.GetId(context.TODO(), &gidSrv.ReqId{
-			BizTag: "111",
-		})
-		if err != nil {
-			continue
-		}
-	}
 }
