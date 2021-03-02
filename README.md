@@ -63,7 +63,7 @@ create table segments
 - 编译运行项目
 
 ```base
-    git clone -b gidV2 https://github.com/hwholiday/gid.git
+    go get github.com/hwholiday/gid/v2@gidV2  OR  git clone -b gidV2 https://github.com/hwholiday/gid.git 
     cd gid/cmd
     go build -o gidsrv
    ./gidsrv -conf ./gid.toml
