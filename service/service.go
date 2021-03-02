@@ -1,9 +1,9 @@
 package service
 
 import (
-	"gid/configs"
-	"gid/library/log"
-	"gid/repository"
+	"github.com/hwholiday/gid/v2/configs"
+	"github.com/hwholiday/gid/v2/library/log"
+	"github.com/hwholiday/gid/v2/repository"
 	"go.uber.org/zap"
 )
 

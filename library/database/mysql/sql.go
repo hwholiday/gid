@@ -2,9 +2,9 @@ package mysql
 
 import (
 	"fmt"
-	"gid/library/log"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/xorm"
+	"github.com/hwholiday/gid/v2/library/log"
 	"go.uber.org/zap"
 	"time"
 )

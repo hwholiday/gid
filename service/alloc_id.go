@@ -1,7 +1,7 @@
 package service
 
 import (
-	"gid/entity"
+	"github.com/hwholiday/gid/v2/entity"
 )
 
 func (s *Service) GetId(tag string) (id int64, err error) {

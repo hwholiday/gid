@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 	"errors"
-	"gid/entity"
+	"github.com/hwholiday/gid/v2/entity"
 	"sync"
 	"time"
 )

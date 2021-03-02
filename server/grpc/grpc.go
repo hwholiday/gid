@@ -1,10 +1,10 @@
 package grpc
 
 import (
-	gidSrv "gid/api"
-	"gid/configs"
-	"gid/library/log"
-	"gid/service"
+	gidSrv "github.com/hwholiday/gid/v2/api"
+	"github.com/hwholiday/gid/v2/configs"
+	"github.com/hwholiday/gid/v2/library/log"
+	"github.com/hwholiday/gid/v2/service"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"net"

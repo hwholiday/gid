@@ -2,11 +2,11 @@ package main
 
 import (
 	"flag"
-	"gid/configs"
-	"gid/library/log"
-	"gid/library/tool"
-	"gid/server/grpc"
-	"gid/service"
+	"github.com/hwholiday/gid/v2/configs"
+	"github.com/hwholiday/gid/v2/library/log"
+	"github.com/hwholiday/gid/v2/library/tool"
+	"github.com/hwholiday/gid/v2/server/grpc"
+	"github.com/hwholiday/gid/v2/service"
 )
 
 func main() {

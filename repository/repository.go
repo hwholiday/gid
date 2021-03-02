@@ -1,9 +1,9 @@
 package repository
 
 import (
-	"gid/configs"
-	"gid/library/database/mysql"
 	"github.com/go-xorm/xorm"
+	"github.com/hwholiday/gid/v2/configs"
+	"github.com/hwholiday/gid/v2/library/database/mysql"
 )
 
 type Repository struct {

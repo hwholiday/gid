@@ -2,7 +2,7 @@ package tool
 
 import (
 	"context"
-	"gid/library/log"
+	"github.com/hwholiday/gid/v2/library/log"
 	"go.etcd.io/etcd/api/v3/mvccpb"
 	"go.etcd.io/etcd/client/v3"
 	"go.uber.org/zap"

@@ -1,9 +1,9 @@
 package repository
 
 import (
-	"gid/entity"
-	"gid/library/log"
-	"gid/library/tool"
+	"github.com/hwholiday/gid/v2/entity"
+	"github.com/hwholiday/gid/v2/library/log"
+	"github.com/hwholiday/gid/v2/library/tool"
 	"go.uber.org/zap"
 )
 

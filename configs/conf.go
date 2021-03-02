@@ -2,9 +2,9 @@ package configs
 
 import (
 	"flag"
-	"gid/library/database/mysql"
-	"gid/library/log"
 	"github.com/BurntSushi/toml"
+	"github.com/hwholiday/gid/v2/library/database/mysql"
+	"github.com/hwholiday/gid/v2/library/log"
 )
 
 var (

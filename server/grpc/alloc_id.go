@@ -3,7 +3,7 @@ package grpc
 import (
 	"context"
 	"errors"
-	gidSrv "gid/api"
+	gidSrv "github.com/hwholiday/gid/v2/api"
 )
 
 func (s *Server) GetId(ctx context.Context, in *gidSrv.ReqId) (*gidSrv.ResId, error) {
