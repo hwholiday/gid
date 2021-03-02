@@ -32,7 +32,7 @@ gid 是使用golang开发的生成分布式Id系统，基于数据库号段算�
   go get github.com/hwholiday/gid/v2@gidV2
   
   //go mod 内
-  //github.com/hwholiday/gid/v2 v2.0.2
+  //github.com/hwholiday/gid/v2 v2.0.6
 ```
 1. 封住了 client 实现了自动识别服务主节点
 2. 只需要实现 client 并调用 GetId(GRPC方法)，无需其他接口，自动创建BizTag，并预加载
@@ -82,8 +82,8 @@ create table segments
 ```base
     go get github.com/hwholiday/gid/v2@gidV2  OR  git clone -b gidV2 https://github.com/hwholiday/gid.git 
     cd gid/cmd
-    go build -o gidsrv
-   ./gidsrv -conf ./gid.toml
+    go build -o gid
+   ./gid -conf ./gid.toml
 ```
 
 #### 压测
