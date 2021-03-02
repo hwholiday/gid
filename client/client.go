@@ -2,14 +2,14 @@ package client
 
 import (
 	"context"
-	gidSrv "gid/api"
+	gidSrv "github.com/hwholiday/gid/v2/api"
 	"go.etcd.io/etcd/api/v3/mvccpb"
 	clientv3 "go.etcd.io/etcd/client/v3"
 	"google.golang.org/grpc"
 	"time"
 )
 
-type client struct {
+type Client struct {
 	etcd     *clientv3.Client
 	node     string
 	key      string
@@ -19,7 +19,7 @@ type client struct {
 	conn     *grpc.ClientConn
 }
 
-func InitGrpc(etcdAddr []string, ttl int64) (*client, error) {
+func InitGrpc(etcdAddr []string, ttl int64) (*Client, error) {
 	c, err := clientv3.New(clientv3.Config{
 		Endpoints:   etcdAddr,
 		DialTimeout: 5 * time.Second,
@@ -27,7 +27,7 @@ func InitGrpc(etcdAddr []string, ttl int64) (*client, error) {
 	if err != nil {
 		return nil, err
 	}
-	cli := &client{
+	cli := &Client{
 		etcd:   c,
 		change: false,
 		key:    "/gid/master",
@@ -37,7 +37,7 @@ func InitGrpc(etcdAddr []string, ttl int64) (*client, error) {
 	return cli, nil
 }
 
-func (c *client) watch() {
+func (c *Client) watch() {
 	watcher := clientv3.NewWatcher(c.etcd)
 	watchChan := watcher.Watch(context.Background(), c.key, clientv3.WithRev(c.revision+1))
 	for watchResp := range watchChan {
@@ -50,7 +50,7 @@ func (c *client) watch() {
 	}
 }
 
-func (c *client) cornTTL() {
+func (c *Client) cornTTL() {
 	if err := c.getMasterNode(); err != nil {
 		panic(err)
 	}
@@ -66,7 +66,7 @@ func (c *client) cornTTL() {
 	}()
 }
 
-func (c *client) getMasterNode() error {
+func (c *Client) getMasterNode() error {
 	var ctx, cancel = context.WithTimeout(context.Background(), time.Second*3)
 	defer cancel()
 	res, err := c.etcd.Get(ctx, c.key)
@@ -89,7 +89,7 @@ func (c *client) getMasterNode() error {
 	return nil
 }
 
-func (c *client) GetGidGrpcClient() (gidSrv.GidClient, error) {
+func (c *Client) GetGidGrpcClient() (gidSrv.GidClient, error) {
 	var err error
 	if c.change {
 		c.conn, err = grpc.Dial(c.node, grpc.WithInsecure())

@@ -3,7 +3,7 @@ package client
 import (
 	"context"
 	"fmt"
-	gidSrv "gid/api"
+	gidSrv "github.com/hwholiday/gid/v2/api"
 	"testing"
 	"time"
 )
